@@ -13,12 +13,12 @@ export default async function handler(req, res) {
 
   try {
     console.log(`usando endpoint: ${endpoint}`)
-    const response = await fetch(endpoint, {
+    const response = await fetch("https://backend-math-tutor.onrender.com/chat", {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({
         message: req.body.question,
-        session_id: req.body.session_id ?? null,
+        session_id: req.body.session_id ?? null,s
       }),
     })
 
