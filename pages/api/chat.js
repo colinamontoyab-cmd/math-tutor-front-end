@@ -12,16 +12,21 @@ export default async function handler(req, res) {
   }
 
   try {
-    console.log(`usando endpoint: ${endpoint}`)
+    const endpoint = 'https://backend-math-tutor.onrender.com/chat'
+
+    console.log(`Usando endpoint: ${endpoint}`)
     const response = await fetch("https://backend-math-tutor.onrender.com/chat", {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({
         message: req.body.question,
-        session_id: req.body.session_id ?? null,s
+        session_id: req.body.session_id ?? null,
       }),
     })
+    const text = await response.text()
 
+    console.log(`Backend status: ${response.status}`)
+    console.log(`Backend response: ${text}`)
     if (!response.ok) {
       return res.status(response.status).json({ message: 'Backend error' })
     }
