@@ -12,6 +12,7 @@ export default async function handler(req, res) {
   }
 
   try {
+    console.log(`usando endpoint: ${endpoint}`)
     const response = await fetch(endpoint, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
