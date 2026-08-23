@@ -6,7 +6,7 @@ import styles from '../styles/Home.module.css'
 
 const GREETING = {
   message:
-    "Hi! I'm your polynomial factorization tutor. Tell me the algebraic expression you're working on and I'll walk you through it step by step.",
+    "¡Hola! Soy tu tutor de factorización de polinomios. Cuéntame la expresión algebraica en la que estás trabajando y te guiaré paso a paso.",
   type: 'apiMessage',
 }
 
@@ -38,7 +38,7 @@ export default function Home() {
   const handleError = () => {
     setMessages((prev) => [
       ...prev,
-      { message: 'Oops! There seems to be an error. Please try again.', type: 'apiMessage' },
+      { message: '¡Ups! Ha ocurrido un error. Por favor, inténtalo de nuevo.', type: 'apiMessage' },
     ])
     setLoading(false)
     setUserInput('')
@@ -97,14 +97,17 @@ export default function Home() {
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <link rel="icon" href="/favicon.ico" />
       </Head>
-      <div className={styles.topnav}>
-        <div className={styles.navlogo}>
-          <img src="/logo.png" alt="logo" />
-        </div>
-        <div className={styles.navlinks}></div>
-      </div>
       <main className={styles.main}>
         <div className={styles.cloud}>
+          <header className={styles.chatheader}>
+            <div className={styles.headerbrand}>
+              <img src="/mathTutor.png" alt="Math Tutor" className={styles.headerlogo} />
+              <div className={styles.headertext}>
+                <h1>Math Tutor</h1>
+                <span>Asistente de Factorización de Polinomios</span>
+              </div>
+            </div>
+          </header>
           <div ref={messageListRef} className={styles.messagelist}>
             {messages.map((message, index) => {
               const className =
@@ -117,7 +120,7 @@ export default function Home() {
               return (
                 <div key={index} className={className}>
                   {message.type === 'apiMessage' ? (
-                    <Image src="/parroticon.png" alt="AI" width="30" height="30" className={styles.boticon} priority />
+                    <Image src="/mathTutor.png" alt="AI" width="30" height="30" className={styles.boticon} priority />
                   ) : (
                     <Image src="/usericon.png" alt="Me" width="30" height="30" className={styles.usericon} priority />
                   )}
@@ -141,7 +144,7 @@ export default function Home() {
                 maxLength={512}
                 id="userInput"
                 name="userInput"
-                placeholder={loading ? 'Waiting for response...' : 'Type your question...'}
+                placeholder={loading ? 'Esperando respuesta...' : 'Escribe tu pregunta...'}
                 value={userInput}
                 onChange={(e) => setUserInput(e.target.value)}
                 className={styles.textarea}
@@ -160,7 +163,7 @@ export default function Home() {
             </form>
           </div>
           <div className={styles.footer}>
-            <p>Powered by NVIDIA NIM</p>
+            <p>Impulsado por NVIDIA NIM</p>
           </div>
         </div>
       </main>
