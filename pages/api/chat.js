@@ -10,12 +10,16 @@ export default async function handler(req, res) {
   if (!endpoint) {
     return res.status(500).json({ message: 'LCC_ENDPOINT_URL is not configured' })
   }
+  console.log('=================================')
+  console.log('CHAT FUNCTION START')
+  console.log('Endpoint:', endpoint)
+  console.log('Question:', req.body?.question)
+  console.log('Session:', req.body?.session_id)
+  console.log('=================================')
 
   try {
-    const endpoint = 'https://backend-math-tutor.onrender.com/chat'
 
-    console.log(`Usando endpoint: ${endpoint}`)
-    const response = await fetch("https://backend-math-tutor.onrender.com/chat", {
+    const response = await fetch(endpoint, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({
@@ -23,17 +27,30 @@ export default async function handler(req, res) {
         session_id: req.body.session_id ?? null,
       }),
     })
-    const text = await response.text()
+    
+    console.log('Backend status:', response.status)
+    const data = await response.json()
 
-    console.log(`Backend status: ${response.status}`)
-    console.log(`Backend response: ${text}`)
+    console.log('Backend data:', JSON.stringify(data))
+
     if (!response.ok) {
-      return res.status(response.status).json({ message: 'Backend error' })
+      console.error('Backend returned error:', data)
+      return res.status(response.status).json({
+        message: data.message ?? 'Backend error',
+      })
     }
 
-    const data = await response.json()
-    return res.status(200).json({ message: data.message, session_id: data.session_id })
+    console.log('Returning successful response to browser')
+    return res.status(200).json({
+      message: data.message,
+      session_id: data.session_id,
+    })
+
   } catch (err) {
-    return res.status(502).json({ message: 'Could not reach the backend' })
+    console.error('ERROR CALLING BACKEND:', err)
+
+    return res.status(502).json({
+      message: 'Could not reach the backend',
+    })
   }
 }
